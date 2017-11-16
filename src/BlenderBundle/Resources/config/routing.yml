@@ -1,0 +1,8 @@
+doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix: /blender/doc
+
+blender_post:
+    path: /blender/post
+    defaults: { _controller: BlenderBundle:Blender:post}
+    methods: [POST]

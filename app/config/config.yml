@@ -1,0 +1,115 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    #esi: ~
+    #translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+# Doctrine Configuration
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%database_host%:%database_port%"
+            options:
+                username: "%database_user%"
+                password: "%database_password%"
+                authSource: "%database_name%"
+    default_database: "%database_name%"
+    document_managers:
+        default:
+            auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    param_fetcher_listener: true
+    body_listener: true
+    body_converter:
+        validate: true
+        validation_errors_argument: validationErrors
+    format_listener:
+        rules:
+            - { path: '^/%api_url%', priorities: ['json'], fallback_format: html, prefer_extension: false }
+            # setting a priority to */* basically means any format will be matched
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: html, prefer_extension: false }
+
+    view:
+        view_response_listener: force
+        formats:
+            json: true
+            rss: true
+            xml: false
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+
+sensio_framework_extra:
+    view:    { annotations: true }
+    request: { converters: true }
+
+nelmio_api_doc: ~
+
+nelmio_cors:
+        defaults:
+            allow_credentials: false
+            allow_origin: []
+            allow_headers: []
+            allow_methods: []
+            expose_headers: []
+            max_age: 0
+            hosts: []
+            origin_regex: false
+        paths:
+            '^/%api_url%':
+                allow_origin: ['*']
+                allow_headers: ['*']
+                allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+                max_age: 3600
+
+btp_api_master:
+    resource_urn_prefix: '%resource_urn_prefix%'

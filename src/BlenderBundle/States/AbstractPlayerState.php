@@ -1,0 +1,60 @@
+<?php
+
+namespace BlenderBundle\States;
+
+
+use BlenderBundle\Interfaces\IPlayerState;
+
+class AbstractPlayerState implements IPlayerState
+{
+    
+    public function meetCellSouth()
+    {
+        
+    }
+
+    public function meetCellEast()
+    {
+        
+    }
+
+    public function meetCellNorth()
+    {
+        
+    }
+
+    public function meetCellWest()
+    {
+        
+    }
+
+    public function meetCellEnd()
+    {
+        
+    }
+
+    public function meetCellInverter()
+    {
+        
+    }
+
+    public function meetCellTeleporter()
+    {
+        
+    }
+
+    public function meetCellUnbreakable()
+    {
+        
+    }
+
+    public function meetCellBreakable()
+    {
+        
+    }
+
+    public function meetCellBeer()
+    {
+        
+    }
+}
