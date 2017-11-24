@@ -1,0 +1,3 @@
+1542481142
+%255BBTP%255CApiMasterBundle%255CDocument%255CBaseDocument%255D%255B1%255D
+a:1:{i:0;O:57:"Doctrine\ODM\MongoDB\Mapping\Annotations\MappedSuperclass":2:{s:15:"repositoryClass";N;s:5:"value";N;}}

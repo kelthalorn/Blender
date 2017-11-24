@@ -51,7 +51,7 @@ class BlenderController extends ApiMasterController
 
         while(!$map->getPlayer()->isPlayerDead()) {
 
-            $map->checkNextMove();
+            $map->checkNextMove($map->getPlayer()->getDirection());
             /**
              * LOG MOVES AND MAP EVOLUTION
              */

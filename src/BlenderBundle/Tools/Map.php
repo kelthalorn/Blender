@@ -36,6 +36,11 @@ class Map
     private $cellFactory;
 
     /**
+     * @var int
+     */
+    private $currentTestDirectionIndex;
+
+    /**
      * MapTool constructor.
      * @param int $width
      * @param int $height
@@ -50,6 +55,7 @@ class Map
         $this->height   = $height-1;
 
         $this->initMap($mapJson);
+        $this->currentTestDirectionIndex = 0;
     }
 
     /**
@@ -137,12 +143,12 @@ class Map
         return array('prefix' => $prefix, 'isPlayerPos' => $isPlayerPos);
     }
     
-    public function checkNextMove() {
+    public function checkNextMove($currentDirection) {
 
         $nextPosX = $this->player->getPosX();
         $nextPosY = $this->player->getPosY();
 
-        switch ($this->player->getDirection()) {
+        switch ($currentDirection) {
 
             case "South" :  $nextPosY++;
                             break;
@@ -164,19 +170,15 @@ class Map
             $this->player->setPosY($nextPosY);
 
             $this->map[$this->player->getPosY()][$this->player->getPosX()]->setPlayerPos(true);
-            return;
+            return true;
         }
 
-        $currentDirectionIndex = array_search($this->player->getDirection(), $this->player->getDirectionOrder());
+        if(!$this->checkNextMove($this->currentTestDirectionIndex)) {
+
+
+        }
         
-        $nextDirectionIndex = $currentDirectionIndex+1;
-        if ($nextDirectionIndex >= count($this->player->getDirectionOrder()))
-            $nextDirectionIndex = 0;
-        
-        $nextDirection = $this->player->getDirectionOrder()[$nextDirectionIndex];
-        
-        
-        $this->player->setDirection($nextDirection);
+        return false;
     }
 
     /**
